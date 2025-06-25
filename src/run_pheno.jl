@@ -1,24 +1,17 @@
-using Pkg
+using YAML
 
-Pkg.add([
-    "ArgParse", "CSV", "CategoricalArrays", "Conda", "DataFrames",
-    "DelimitedFiles", "Distances", "Distributions", "GpABC", "Impute",
-    "LsqFit", "MendelPlots", "Mmap", "Plots", "Printf", "ProgressMeter",
-    "PyCall", "StatsBase", "StatsPlots", "YAML"
-])
-
-using Conda; Conda.pip_interop(true); Conda.pip("install", "bed_reader")
-
-Pkg.instantiate()
-println("All packages installed successfully!")
+"""Run phenotype simulation using the provided configuration file."""
 function run_pheno(config_file::String)
-    cmd = `julia run_program.jl --phenotype --config $config_file`
-    run(cmd)
+    options = YAML.load_file(config_file)
+    pipelines = Dict(
+        "preprocessing" => false,
+        "genotype" => false,
+        "phenotype" => true,
+        "evaluation" => false,
+        "optimisation" => false,
+    )
+    run_program(pipelines, options)
 end
-if abspath(PROGRAM_FILE) == @__FILE__
-    if length(ARGS) < 1
-        println("Usage: julia run_pheno.jl <config_file>")
-        exit(1)
-    end
-    run_pheno(ARGS[1])
-end
+
+end # file
+

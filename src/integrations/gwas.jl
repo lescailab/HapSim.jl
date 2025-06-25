@@ -1,4 +1,3 @@
-include("../evaluation/metrics/eval_gwas.jl")
 
 using ArgParse
 

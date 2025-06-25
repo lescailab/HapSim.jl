@@ -1,7 +1,5 @@
 using Random, Distributions, DataFrames, CSV, StatsBase, ProgressMeter
 
-include("../../utils/parameter_parsing.jl")
-include("write_output.jl")
 
 
 """Sample effective population size
@@ -162,3 +160,4 @@ function create_synthetic_genotype(options)
         create_synthetic_genotype_for_chromosome(metadata)
     end
 end
+

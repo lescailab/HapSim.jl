@@ -1,11 +1,5 @@
 using ArgParse, YAML, Printf
 
-include("utils/parameter_parsing.jl")
-include("preprocessing/preprocessing.jl")
-include("optimisation/abc.jl")
-include("algorithms/genotype/genotype_algorithm.jl")
-include("algorithms/phenotype/phenotype_algorithm.jl")
-include("evaluation/evaluation.jl")
 
 """Executes the program, according to which pipelines and configuration options are specified in the input
 
@@ -115,3 +109,4 @@ function main()
 end
 
 main()
+

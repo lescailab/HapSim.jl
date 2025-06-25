@@ -1,14 +1,6 @@
 """Executes the pipeline for evaluating synthetic data quality
 """
 
-include("../utils/reference_data.jl")
-include("metrics/eval_aats.jl")
-include("metrics/eval_kinship_detail.jl")
-include("metrics/eval_ld_corr.jl")
-include("metrics/eval_ld_decay.jl")
-include("metrics/eval_maf.jl")
-include("metrics/eval_pca.jl")
-include("metrics/eval_gwas.jl")
 
 function run_kinship_evaluation(ibsfile_real, ibsfile_synt, ibsfile_cross)
     run_kinship(ibsfile_real, ibsfile_synt, ibsfile_cross)
@@ -189,3 +181,4 @@ function run_evaluation(options)
         run_pipeline(options, chromosome, superpopulation, metrics)
     end
 end
+

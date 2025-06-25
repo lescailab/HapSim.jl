@@ -3,10 +3,6 @@
 
 using GpABC
 
-include("../evaluation/metrics/eval_ld_decay.jl")
-include("../evaluation/metrics/eval_kinship_quick.jl")
-include("../utils/reference_data.jl")
-include("../algorithms/genotype/genotype_algorithm.jl")
 
 
 """Struct for storing metadata required by the ABC procedure
@@ -191,3 +187,4 @@ function run_optimisation(options)
         run_abc_for_superpopulation(options, fp, superpopulation, chromosome)
     end
 end
+
