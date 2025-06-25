@@ -33,16 +33,16 @@ HapSim.fetch("/data/")
 
 ``` 
 
-2. Generate Human genotypes with parameters described within config.yaml , using a thread number defined with ```threads``` argument:
+2. Generate Human genotypes with parameters described within `docs/config.yaml`, using a thread number defined with ```threads``` argument:
    
 ``` 
-HapSim.run_geno("threads","config.yaml")
+HapSim.run_geno("threads","docs/config.yaml")
 
 ``` 
-3. Generate Human phenotypes with parameters described within config.yaml
+3. Generate Human phenotypes with parameters described within `docs/config.yaml`
 
 ``` 
-HapSim.run_pheno("config.yaml")
+HapSim.run_pheno("docs/config.yaml")
 
 ``` 
 

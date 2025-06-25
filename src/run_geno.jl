@@ -1,24 +1,20 @@
-using Pkg
+using YAML
 
-Pkg.add([
-    "ArgParse", "CSV", "CategoricalArrays", "Conda", "DataFrames",
-    "DelimitedFiles", "Distances", "Distributions", "GpABC", "Impute",
-    "LsqFit", "MendelPlots", "Mmap", "Plots", "Printf", "ProgressMeter",
-    "PyCall", "StatsBase", "StatsPlots", "YAML"
-])
-
-using Conda; Conda.pip_interop(true); Conda.pip("install", "bed_reader")
-
-Pkg.instantiate()
-println("All packages installed successfully!")
-function run_geno(threads::String, config_file::String)
-    cmd = `julia --threads $threads run_program.jl --genotype --config $config_file`
-    run(cmd)
+"""Run genotype simulation using the provided configuration file.
+The number of Julia threads can be specified via `threads`.
+"""
+function run_geno(threads::Integer, config_file::String)
+    ENV["JULIA_NUM_THREADS"] = string(threads)
+    options = YAML.load_file(config_file)
+    pipelines = Dict(
+        "preprocessing" => false,
+        "genotype" => true,
+        "phenotype" => false,
+        "evaluation" => false,
+        "optimisation" => false,
+    )
+    run_program(pipelines, options)
 end
-if abspath(PROGRAM_FILE) == @__FILE__
-    if length(ARGS) < 1
-        println("Usage: julia run_geno.jl <config_file>")
-        exit(1)
-    end
-    run_geno(ARGS[1])
-end
+
+end # file
+
