@@ -1,12 +1,7 @@
 using Test
 using YAML
 using Random
-
-# Add the src directory to path so we can import necessary functions
-push!(LOAD_PATH, joinpath(@__DIR__, "..", "src"))
-
-# Import the SynteticData module which contains the generate_pheno function
-include(joinpath(@__DIR__, "..", "src", "run_pheno.jl"))
+using HapSim
 
 @testset "Phenotype Generation Directory Creation" begin
     # Define the output directory
