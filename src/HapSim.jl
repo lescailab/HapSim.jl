@@ -11,6 +11,7 @@ include("scripts/algorithms/genotype/genotype_algorithm.jl")
 include("scripts/algorithms/phenotype/phenotype_algorithm.jl")
 include("scripts/evaluation/evaluation.jl")
 include("fetch.jl")
+
 """Executes the program, according to which pipelines and configuration options are specified in the input
 
 Note that any combination of pipelines can be run together, except the optimisation pipeline, which exits immediately after running
@@ -84,11 +85,19 @@ end
 function main()
     parsed_args = parse_commandline()
     
-    options = YAML.load_file("config.yaml")
-    if parsed_args["config"] != nothing
-        options_override = YAML.load_file(parsed_args["config"])
-        options = merge(options, options_override)
-    end
+# fallback: config.yaml nella cartella src/
+default_config_path = joinpath(@__DIR__, "config.yaml")
+
+# se viene passato --config, usalo; altrimenti usa quello in src/
+config_path = parsed_args["config"] !== nothing ? parsed_args["config"] : default_config_path
+
+if !isfile(config_path)
+    error("File di configurazione non trovato in: $config_path")
+end
+
+@info "Caricamento configurazione da: $config_path"
+options = YAML.load_file(config_path)
+
     
     pipelines = Dict("preprocessing" => parsed_args["preprocessing"], 
                      "genotype" => parsed_args["genotype"],
