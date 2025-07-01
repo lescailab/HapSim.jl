@@ -9,7 +9,7 @@ using HapSim
     mkpath(output_dir)  # Ensure the directory exists before the test
     
     config_dir = joinpath(@__DIR__, "..", "src");
-    config_path = joinpath(config_dir, "config.yaml")
+    options = joinpath(config_dir, "config.yaml")
     
     # Create mock input files that generate_pheno would expect
     sample_file = joinpath(output_dir, "test-1.sample")
@@ -25,9 +25,14 @@ using HapSim
     # Run the generate_pheno function 
     
     try
-        #cd("../src")
-        #include("run_pheno.jl")
-        run_pheno(config_path)
+    pipelines = Dict(
+                 "preprocessing" => false,
+                 "genotype" => true,
+                 "phenotype" => false,
+                 "evaluation" => false,
+                 "optimisation" => false
+             )   
+run_program(pipelines, options)
     catch e
         # xx
        # @info "Note: generate_pheno execution failed with: $e"
