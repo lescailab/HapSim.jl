@@ -28,7 +28,7 @@ For the comprehensive tool list please check [here](https://github.com/intervene
 1. Activate package and download the reference data:
 
 ``` 
-include("HapSim.jl")
+using HapSim
 HapSim.fetch("/data/")
 
 ``` 
@@ -36,13 +36,38 @@ HapSim.fetch("/data/")
 2. Generate Human genotypes with parameters described within config.yaml , using a thread number defined with ```threads``` argument:
    
 ``` 
-HapSim.run_geno("threads","config.yaml")
+using HapSim
 
+ pipelines = Dict(
+                 "preprocessing" => false,
+                 "genotype" => true,
+                 "phenotype" => false,
+                 "evaluation" => false,
+                 "optimisation" => false
+             )
+
+using YAML
+
+options = YAML.load_file("config.yaml")
+
+run_program(pipelines, options)
 ``` 
 3. Generate Human phenotypes with parameters described within config.yaml
 
 ``` 
-HapSim.run_pheno("config.yaml")
+using HapSim
+
+ pipelines = Dict(
+                 "preprocessing" => false,
+                 "genotype" => false,
+                 "phenotype" => true,
+                 "evaluation" => false,
+                 "optimisation" => false
+             )
+
+using YAML
+
+options = YAML.load_file("config.yaml")
 
 ``` 
 
