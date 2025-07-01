@@ -1,6 +1,8 @@
 module HapSim
 
-using ArgParse, YAML, Printf
+using ArgParse, YAML, Printf, Conda
+
+Conda.pip_interop(true); Conda.pip("install", "bed_reader")
 
 include("scripts/utils/parameter_parsing.jl")
 include("scripts/preprocessing/preprocessing.jl")
